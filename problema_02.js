@@ -2,3 +2,26 @@
 
 // IMPORTANTE:
 // 	Esse número pode ser informado através de qualquer entrada de sua preferência ou pode ser previamente definido no código;
+
+let a = 0;
+let b = 1;
+let numInformado = 4181; // número informado pelo usuário
+let novo = 0;
+
+let verificaFibonnaci = (numInformado) => {
+    if (numInformado >= 1) {
+        while (numInformado >= novo) {
+            novo = a + b;
+            a = b;
+            b = novo;
+        }
+    }
+    if (a === numInformado || numInformado === 0) return true;
+    else return false;
+};
+
+console.log(
+    `O número ${numInformado}${
+        verificaFibonnaci(numInformado) ? "" : " não"
+    } pertence à sequencia Fibonacci`
+);
