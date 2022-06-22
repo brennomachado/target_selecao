@@ -13,82 +13,70 @@
 // ## para dias que não serão contabilizados.
 // ####################################################################
 
-//Config inicial
-const vetorFaturamento = [];
-const diasEmMes = 30;
-const faturamentoMaxDiario = 100;
+const vetorFaturamento = require("./dados.json");
 
-//Criando vetor onde cada posicão corresponde ao dia do faturamento no mês com seu respectivo valor dentro dos maximos estabelecidos.
-for (let i = 0; i < diasEmMes; i++) {
-    vetorFaturamento.push(Math.floor(Math.random() * faturamentoMaxDiario));
-}
+const calculaFatMax = (arr) => {
+    let maximo = 0;
 
-// Simulando dias sem faturamento com entrada null
-vetorFaturamento[10] = null;
-vetorFaturamento[11] = null;
-vetorFaturamento[17] = null;
-vetorFaturamento[18] = null;
-
-//Impressão do vetor para conferência dos resultados no console
-console.log(`Valores de entrada de faturamento num mês de 30 dias`);
-console.table(vetorFaturamento);
-
-const faturamentoMax = (vetor) => {
-    let max = 0;
-    for (let i = 0; i < vetor.length; i++) {
-        if (vetor[i] !== null && vetor[i] > max) max = vetor[i];
-    }
-    return max;
-};
-
-const faturamentoMin = (vetor) => {
-    let min = faturamentoMaxDiario;
-    for (let i = 0; i < vetor.length; i++) {
-        if (vetor[i] !== null && vetor[i] < min) min = vetor[i];
-    }
-    return min;
-};
-
-const mediaMensalFaturamento = (vetor) => {
-    let somatorio = 0;
-    let diasValidos = 0;
-    // console.log(vetor);
-    for (let i = 0; i < vetor.length; i++) {
-        if (vetor[i] !== null) somatorio += vetor[i];
-        else diasValidos += 1;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].valor > maximo) maximo = arr[i].valor;
     }
 
-    return diasEmMes > diasValidos ? somatorio / (diasEmMes - diasValidos) : 0;
+    return maximo;
 };
 
-const diasFaturamentoAcimaMedia = (vetor) => {
+const calculaFatMin = (arr) => {
+    let minimo = 9999999999999;
+
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].valor !== 0 && arr[i].valor < minimo) minimo = arr[i].valor;
+    }
+
+    return minimo !== 9999999999999 ? minimo : 0;
+};
+
+const mediaMensalFaturamento = (arr) => {
+    let diasNaoValidos = 0;
+    const tam = arr.length;
+    let soma = 0;
+    for (let i = 0; i < tam; i++) {
+        if (arr[i].valor !== 0) soma += arr[i].valor;
+        else diasNaoValidos += 1;
+    }
+    return tam > diasNaoValidos ? soma / (tam - diasNaoValidos) : 0;
+};
+
+const diasFatAcimaMedia = (arr) => {
+    const media = mediaMensalFaturamento(arr);
     let diasAcimaMedia = 0;
-    const mediaMensal = mediaMensalFaturamento(vetor);
-    for (let i = 0; i < vetor.length; i++) {
-        if (vetor[i] !== null && vetor[i] > mediaMensal) diasAcimaMedia += 1;
-    }
 
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].valor > media) diasAcimaMedia += 1;
+    }
     return diasAcimaMedia;
 };
 
-//Saídas pedidas
 console.log(
-    `Valor do dia com menor faturamento: ${faturamentoMin(vetorFaturamento)}`
+    `Menor valor de faturamento/dia no mês: R$ ${calculaFatMin(
+        vetorFaturamento
+    ).toFixed(2)}`
+);
+console.log(
+    `Maior valor de faturamento/dia no mês: R$ ${calculaFatMax(
+        vetorFaturamento
+    ).toFixed(2)}`
 );
 
 console.log(
-    `Valor do dia com maior faturamento: ${faturamentoMax(vetorFaturamento)}`
-);
-
-console.log(
-    `N° de dias com valor maior que a media diária de faturamento: ${diasFaturamentoAcimaMedia(
+    `N° de dias acima da média do mês:         ${diasFatAcimaMedia(
         vetorFaturamento
     )}`
 );
 
-// Extra, achei legal expor a média diária mensal também.
 console.log(
-    `Media diária de faturamento: ${mediaMensalFaturamento(
+    `\nMédia de faturamento/dia no mês:       R$ ${mediaMensalFaturamento(
         vetorFaturamento
     ).toFixed(2)}`
 );
+
+// console.table(vetorFaturamento); // Exibe a tabela de dados
