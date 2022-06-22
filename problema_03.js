@@ -7,12 +7,6 @@
 // a) Usar o json ou xml disponível como fonte dos dados do faturamento mensal;
 // b) Podem existir dias sem faturamento, como nos finais de semana e feriados. Estes dias devem ser ignorados no cálculo da média;
 
-// ####################################################################
-// ## OBS: Não existe fonte de dados disponível na plataforma (item a)
-// ## Foi usado um array gerado usando Math.random com valores "null"
-// ## para dias que não serão contabilizados.
-// ####################################################################
-
 const vetorFaturamento = require("./dados.json");
 
 const calculaFatMax = (arr) => {
@@ -56,6 +50,7 @@ const diasFatAcimaMedia = (arr) => {
     return diasAcimaMedia;
 };
 
+//Cálculo e saída dos resultados
 console.log(
     `Menor valor de faturamento/dia no mês: R$ ${calculaFatMin(
         vetorFaturamento
