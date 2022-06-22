@@ -39,6 +39,6 @@ NÃO SE ESQUEÇA DE INSERIR O LINK DO SEU REPOSITÓRIO NO GITHUB COM O CÓDIGO F
 #### Soluções
 
 -   [ _2)_](./problema_02.js)
--   [_3)_](./problema_03.js) OBS: Não houve json ou xml informado para a questão, dados feitos no próprio código segundo critérios próprios.
+-   [_3)_](./problema_03.js)
 -   [_4)_](./problema_04.js)
 -   [_5)_](./problema_05.js)
